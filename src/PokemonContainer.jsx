@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getPokemons } from "./api/Pokemon";
 import { blender } from "./utils/Blender";
 import { GameDashboard } from "./modules/GameDashboard";
+import { PokemonCard } from "./modules/PokemonCard";
 
 function PokemonContainer() {
   const [data, setData] = useState([]);
@@ -44,26 +45,11 @@ function PokemonContainer() {
     <>
       <GameDashboard score={score} bestScore={bestScore} />
       <div className="pokemons-container">
-        {data.length === 0
-          ? "Loading..."
-          : data.map((pokemon) => {
-              return (
-                <div
-                  key={pokemon.id}
-                  onClick={() => clickHandler(pokemon.id)}
-                  className="card"
-                >
-                  <div className="image-container">
-                    <img
-                      className="pokemon"
-                      src={pokemon.sprites.other.dream_world.front_default}
-                      alt={pokemon.name}
-                    />
-                  </div>
-                  <div className="name-container">{pokemon.name}</div>
-                </div>
-              );
-            })}
+        {data.length === 0 ? (
+          "Loading..."
+        ) : (
+          <PokemonCard pokemons={data} clickHandler={clickHandler} />
+        )}
       </div>
     </>
   );
